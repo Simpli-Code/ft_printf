@@ -3,39 +3,72 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: chruhin <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: chruhin <chruhin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/13 12:31:17 by chruhin           #+#    #+#              #
-#    Updated: 2023/01/11 18:20:12 by chruhin          ###   ########.fr        #
+#    Updated: 2024/03/02 11:10:17 by chruhin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
+# name of the archive file
+NAME				=		libftprintf.a
 
-SOURCES = ft_printf.c ft_put_char.c ft_put_nbr.c ft_put_percent.c ft_put_str.c \
-		ft_check_specifier.c ft_put_addres.c ft_put_hex_low.c ft_put_hex_upp.c \
-		ft_put_unsigned.c
+# color codes
+GRN					=		\e[1;32m
+RST					=		\e[0m
 
-OBJECTS = $(SOURCES:.c=.o)
+# Directories
+SRC_DIR				=		src
+OBJ_DIR				=		obj
+INC_DIR				=		inc
 
-CFLAGS = -Wall -Wextra -Werror
+# Source files
+DIRS				=		specifiers main
+SRCS				=		$(foreach dir,$(DIRS),$(filter %.c,$(shell find $(SRC_DIR)/$(dir) -type f)))
 
-$(NAME): all
+# Object files
+OBJS				=		$(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 
-all:
-		$(CC) $(CFLAGS) -c $(SOURCES)
-		ar -rcs $(NAME) $(OBJECTS)
+# Header files
+INCS				=		$(addprefix -I, $(INC_DIR))
 
+# Compiler flags
+CFLAGS				=		-Wall -Wextra -Werror
+
+# Cleanup
+RM					=		rm -rf
+
+# No exceptions
+.PHONY:						all clean fclean re
+
+# Targets
+all:						$(NAME)
+
+# Create a directory for obj
+$(OBJ_DIR):
+							@mkdir -p $(OBJ_DIR)
+# Compiling obj
+$(OBJ_DIR)/%.o:				$(SRC_DIR)/%.c | $(OBJ_DIR)
+							@mkdir -p $(dir $@)
+							@$(CC) $(CFLAGS) $(INCS) -c $< -o $@
+
+# Compiling exec
+$(NAME): 					$(OBJ_DIR) $(OBJS)
+							@ar -rcs $@ $(OBJS)
+							@printf "${GRN}"'Compiled successfuly'"${RST}\n"
+
+# Remove object files
 clean:
-		/bin/rm -f $(OBJECTS)
+							@$(RM) $(OBJ_DIR)
 
-fclean: clean
-		/bin/rm -f $(NAME)
+# Remove obj & exec files
+fclean:						clean
+							@$(RM) $(NAME)
 
-re: fclean all
+# remove all & recompile
+re:							fclean all
 
-.PHONY: all bonus clean fclean re
 
 # https://www.cs.swarthmore.edu/~newhall/unixhelp/howto_makefiles.html
 # https://cs.colby.edu/maxwell/courses/tutorials/maketutor/
-# 
+#
