@@ -12,7 +12,7 @@ Format Specifiers:
 * *%u: Print an unsigned integer in decimal format.
 * %%: Print a percent sign ‘%’.
 
-🛠️ Usage
+# 🛠️ Usage
 Requirements
 
 This program is written in C language for Linux distributions and thus needs the clang compiler and some standard C libraries to run.
@@ -25,15 +25,15 @@ $ make
 
 After compilation you will get an archive file with  .a  extention (which is a static library archive) to link and compile it with your other programs, you need to follow these steps:
 
-* 1. Compilation: Compile your main program files (*.c) along with any necessary header files using the clang compiler.
+1. Compilation: Compile your main program files (*.c) along with any necessary header files using the clang compiler.
 
-$ g++ -c main.c -o main.o
+  $ clang -c main.c -o main.o
 
-* 2. Linking: Link your main program with the static library file (.a file) using the -l option followed by the name of the library, and optionally specify the path to the library using the -L option.
+2. Linking: Link your main program with the static library file (.a file) using the -l option followed by the name of the library, and optionally specify the path to the library using the -L option.
 
-$ g++ main.o -o my_program -L/path/to/libft -lmylibft
+  $ clang main.o -o my_program -L/path/to/library -lmylibrary
 
-📑 Index
+# 📑 Index
 @root
 
 📁 inc: contains the program's headers.
