@@ -13,10 +13,6 @@
 # name of the archive file
 NAME				=		libftprintf.a
 
-# color codes
-GRN					=		\e[1;32m
-RST					=		\e[0m
-
 # Directories
 SRC_DIR				=		src
 OBJ_DIR				=		obj
@@ -55,7 +51,6 @@ $(OBJ_DIR)/%.o:				$(SRC_DIR)/%.c | $(OBJ_DIR)
 # Compiling exec
 $(NAME): 					$(OBJ_DIR) $(OBJS)
 							@ar -rcs $@ $(OBJS)
-							@printf "${GRN}"'Compiled successfuly'"${RST}\n"
 
 # Remove object files
 clean:
