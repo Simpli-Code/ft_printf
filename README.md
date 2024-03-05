@@ -46,3 +46,5 @@ $ clang main.o -o my_program -L/path/to/library -lmylibrary
 📁 src: contains the source code of the program.
 
 Makefile - contains instructions for compiling the program and testing it.
+
+Note: This program covers only mandatory requirements of the project's subject.
